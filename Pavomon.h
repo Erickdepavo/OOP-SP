@@ -11,10 +11,9 @@ class Pavomon{
 
     protected:
         string ID;
-        string baseName;
-        string baseType;
+        string name;
+        string type;
         string gender;
-        int baseLevel;
         int baseHp;
         int baseAttack;
         int baseDefense;
