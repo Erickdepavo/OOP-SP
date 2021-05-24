@@ -10,6 +10,7 @@ using namespace std;
 class Pavomon{
 
     protected:
+        string ID;
         string name;
         string type;
         int hp;
