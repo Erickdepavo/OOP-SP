@@ -5,6 +5,6 @@
 
 using namespace std;
 
-class grassPavomon: public Pavomon{
+class GrassPavomon: public Pavomon{
 
 };
