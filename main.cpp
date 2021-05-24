@@ -12,6 +12,10 @@
 #include "normalPavomon.h"
 #include "waterPavomon.h"
 
+/*
+GitHub: https://github.com/Erickdepavo/OOP-SP
+*/
+
 using namespace std;
 
 string readFileIntoString(const string& path) {
@@ -133,7 +137,6 @@ void readMoves() {
         cout << endl;
     }
 }
-
 
 
 int main() {
