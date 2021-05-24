@@ -1,15 +1,15 @@
 #include <iostream>
 #include <string>
-#include <Vector>
+#include <vector>
 
 using namespace std;
 
 #ifndef Pavomon_h
 #define Pavomon_h
 
-class Pavomon{
+class Pavomon {
 
-    protected:
+    public:
         string ID;
         string name;
         string type;
@@ -20,5 +20,5 @@ class Pavomon{
         int baseSpAttack;
         int baseSpDefense;
         int baseSpeed;
-    };
+};
 #endif
