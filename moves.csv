@@ -1,0 +1,41 @@
+﻿TYPE,MOVE NAME,MOVE TYPE,VALUE,LIMIT
+Normal,Body Slam,Damage,85,15
+Normal,Cut,Damage,50,30
+Normal,Fake Out,Damage,40,10
+Normal,Giga Impact,Damage,150,5
+Normal,Head Charge,Damage,120,15
+Normal,Hyper Beam,Damage,150,5
+Normal,Mega Punch,Damage,80,20
+Normal,Headbutt,Damage,70,15
+Grass,Bullet Seed,Damage,25,30
+Grass,Branch Poke,Damage,40,40
+Grass,Frenzy Plant,Damage,150,4
+Grass,Grass Pledge,Damage,80,10
+Grass,Hom Leech,Damage,75,10
+Grass,Leaf Blade,Damage,90,15
+Grass,Magical Leaf,Damage,60,20
+Grass,Needle Arm,Damage,60,15
+Water,Aqua Jet,Damage,40,20
+Water,Aqua Tail,Damage,90,10
+Water,Bubble Beam,Damage,65,20
+Water,Dive,Damage,80,10
+Water,Hydro Cannon,Damage,150,5
+Water,Hydro Pump,Damage,110,5
+Water,Razor Shell,Damage,75,10
+Water,Water Gun,Damage,40,25
+Fire,Blast Burn,Damage,150,5
+Fire,Burn Up,Damage,130,5
+Fire,Ember,Damage,40,25
+Fire,Fire Fang,Damage,65,15
+Fire,Fire Spin,Damage,35,15
+Fire,Flamethrower,Damage,90,15
+Fire,Inferno,Damage,100,5
+Fire,Overheat,Damage,130,5
+Electric,Buzzy Buzz,Damage,90,15
+Electric,Bolt Beak,Damage,85,10
+Electric,Spark,Damage,65,20
+Electric,Thunder,Damage,110,10
+Electric,Thunderbolt,Damage,90,15
+Electric,Volt Tackle,Damage,120,15
+Electric,Zippy Zap,Damage,50,15
+Electric,Wild Charge,Damage,90,15
