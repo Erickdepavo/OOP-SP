@@ -11,14 +11,15 @@ class Pavomon{
 
     protected:
         string ID;
-        string name;
-        string type;
-        int hp;
-        int attack;
-        int defense;
-        int spAttack;
-        int spDefense;
-        int speed;
+        string baseName;
+        string baseType;
         string gender;
+        int baseLevel;
+        int baseHp;
+        int baseAttack;
+        int baseDefense;
+        int baseSpAttack;
+        int baseSpDefense;
+        int baseSpeed;
     };
 #endif
