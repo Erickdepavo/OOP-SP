@@ -24,7 +24,7 @@ using namespace std;
 
 int main() {
 
-    Pavodex pavodex;
+    Pavodex pavodex; // Lee todos los datos al inicializar
     
     for (int i = 0; i < pavodex.getNormalPavomons().size(); i++) {
         pavodex.getNormalPavomons()[i]->printPavomon();
@@ -38,7 +38,7 @@ int main() {
     pavodex.printMovesList();
 
     // Crear batalla
-    // Battle battle(/* ... */)
+    // Battle battle(/* ... */); // Crea el administrador de batallas
 
     return 0;
 }

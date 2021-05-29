@@ -69,6 +69,7 @@ void Pavodex::readPavomons() {
     }
   }
 }
+
 void Pavodex::readMoves() {
   string filename("moves.csv");
   string file_contents;

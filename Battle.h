@@ -5,21 +5,23 @@
 #include <string>
 #include <vector>
 
+#include "BattleMove.h"
+
 using namespace std;
 
 class Battle {
   public:
     string pavomon1ID;
     string pavomon1Type;
-    string pavomon1Moves;
-    string pavomon1HP;
-    string pavomon1Level;
+    vector<BattleMove*> pavomon1Moves;
+    int pavomon1HP;
+    int pavomon1Level;
 
     string pavomon2ID;
     string pavomon2Type;
-    string pavomon2Moves;
-    string pavomon2HP;
-    string pavomon2Level;
+    vector<BattleMove*> pavomon2Moves;
+    int pavomon2HP;
+    int pavomon2Level;
 
     // Crear constructor
     // ...
