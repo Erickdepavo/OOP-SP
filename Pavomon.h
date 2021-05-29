@@ -23,7 +23,6 @@ class Pavomon {
     int baseSpDefense;
     int baseSpeed;
 
-    //virtual Character getCharacter() = 0; 
     virtual vector<BattleMove*> getMoves(vector<BattleMove*> fullList) = 0;
 
     void printPavomon();

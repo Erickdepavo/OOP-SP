@@ -5,28 +5,15 @@
 #include <string>
 #include <vector>
 
-#include "Pavomon.h"
-
 using namespace std;
 
-class Character /*public Pavomon*/ {
+class Character {
   public:
-    //Pavomon getPavomon();
-    //int getLevel();
-    //void setLevel(int level);
-
-    int getTotalHp(int level);
-    int getAttack(int level);
-    int getDefense(int level);
-    int getSpAttack(int level);
-    int getSpDefense(int level);
-    int getSpeed(int level);
-
-    //Character();
-    //Character(/*Pavomon pavomon,*/ int level);
-
-  //private:
-    //Pavomon pavomon;
-    //int level;
+    virtual int getTotalHp(int level) = 0;
+    virtual int getAttack(int level) = 0;
+    virtual int getDefense(int level) = 0;
+    virtual int getSpAttack(int level) = 0;
+    virtual int getSpDefense(int level) = 0;
+    virtual int getSpeed(int level) = 0;
 };
 #endif

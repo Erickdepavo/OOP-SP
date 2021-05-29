@@ -8,6 +8,7 @@
 #include "BattleMove.cpp"
 #include "Pavomon.cpp"
 #include "Pavodex.cpp"
+#include "Battle.h"
 
 /*
 #include "ElectricPavomon.h"
@@ -35,8 +36,11 @@ int main() {
         pavodex.getMoves()[i]->printBattleMove();
     }
 
-    //pavodex.printPavomonList();
-    //pavodex.printMovesList();
+    pavodex.printPavomonList();
+    pavodex.printMovesList();
+
+    // Crear batalla
+    Battle battle(/* ... */)
 
     return 0;
 }
