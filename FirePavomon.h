@@ -1,3 +1,6 @@
+#ifndef FirePavomon_h
+#define FirePavomon_h
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -5,6 +8,13 @@
 
 using namespace std;
 
-class FirePavomon: public Pavomon{
+class FirePavomon: public Pavomon, public Character {
+  using Pavomon::Pavomon;
 
+  public:
+    vector<BattleMove*> getMoves(vector<BattleMove*> fullList) {
+      return fullList;
+    }
 };
+
+#endif
