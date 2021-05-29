@@ -40,7 +40,7 @@ int main() {
     pavodex.printMovesList();
 
     // Crear batalla
-    Battle battle(/* ... */)
+    // Battle battle(/* ... */)
 
     return 0;
 }
