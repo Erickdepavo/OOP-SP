@@ -1,41 +1,41 @@
-﻿TYPE,MOVE NAME,MOVE TYPE,VALUE,LIMIT
-Normal,Body Slam,Damage,85,15
-Normal,Cut,Damage,50,30
-Normal,Fake Out,Damage,40,10
-Normal,Giga Impact,Damage,150,5
-Normal,Head Charge,Damage,120,15
-Normal,Hyper Beam,Damage,150,5
-Normal,Mega Punch,Damage,80,20
-Normal,Headbutt,Damage,70,15
-Grass,Bullet Seed,Damage,25,30
-Grass,Branch Poke,Damage,40,40
-Grass,Frenzy Plant,Damage,150,4
-Grass,Grass Pledge,Damage,80,10
-Grass,Hom Leech,Damage,75,10
-Grass,Leaf Blade,Damage,90,15
-Grass,Magical Leaf,Damage,60,20
-Grass,Needle Arm,Damage,60,15
-Water,Aqua Jet,Damage,40,20
-Water,Aqua Tail,Damage,90,10
-Water,Bubble Beam,Damage,65,20
-Water,Dive,Damage,80,10
-Water,Hydro Cannon,Damage,150,5
-Water,Hydro Pump,Damage,110,5
-Water,Razor Shell,Damage,75,10
-Water,Water Gun,Damage,40,25
-Fire,Blast Burn,Damage,150,5
-Fire,Burn Up,Damage,130,5
-Fire,Ember,Damage,40,25
-Fire,Fire Fang,Damage,65,15
-Fire,Fire Spin,Damage,35,15
-Fire,Flamethrower,Damage,90,15
-Fire,Inferno,Damage,100,5
-Fire,Overheat,Damage,130,5
-Electric,Buzzy Buzz,Damage,90,15
-Electric,Bolt Beak,Damage,85,10
-Electric,Spark,Damage,65,20
-Electric,Thunder,Damage,110,10
-Electric,Thunderbolt,Damage,90,15
-Electric,Volt Tackle,Damage,120,15
-Electric,Zippy Zap,Damage,50,15
-Electric,Wild Charge,Damage,90,15
+﻿TYPE,MOVE NAME,MOVE TYPE,VALUE 1,VALUE 2,LIMIT,FATIGUE
+Normal,Heal Up,Heal,43,0,15,0
+Normal,Cut,Damage,25,0,30,0
+Normal,Fake Out,Damage,20,0,10,-1
+Normal,Giga Impact,Damage,75,0,5,0
+Normal,Head Charge,Damage,60,0,15,0
+Normal,Hyper Beam,Damage+Damage,175,75,3,0
+Normal,Aura control,Damage+Heal,35,70,3,0
+Normal,Headbutt,Damage,35,0,15,0
+Grass,Photosynthesis,Heal,75,0,3,1
+Grass,Branch Poke,Damage,20,0,40,-1
+Grass,Frenzy Plant,Damage,75,0,4,1
+Grass,Grass Pledge,Damage,40,0,10,0
+Grass,Hom Leech,Damage+Heal,25,50,10,0
+Grass,Leaf Blade,Damage,45,0,15,0
+Grass,Magical Leaf,Damage+Heal,30,10,20,0
+Grass,Needle Arm,Damage,35,0,15,0
+Water,Aqua Jet,Damage,45,0,20,0
+Water,Aqua Tail,Damage,20,0,10,-1
+Water,Bubble Beam,Damage,33,0,20,0
+Water,Sauna,Heal,200,0,4,2
+Water,Hydro Cannon,Damage,75,0,5,1
+Water,Hydro Pump,Damage,55,0,5,0
+Water,Evian,Damage+Heal,100,150,1,1
+Water,Water Gun,Damage,20,0,25,0
+Fire,Blast Burn,Damage,75,0,5,1
+Fire,Burn Up,Damage+Damage,65,10,5,0
+Fire,Ember,Damage,20,0,25,-1
+Fire,Fire Fang,Damage,33,0,15,0
+Fire,Fire Spin,Damage+Heal,25,35,15,0
+Fire,Flamethrower,Damage,45,0,15,0
+Fire,Inferno,Damage,50,0,5,0
+Fire,Overheat,Damage,65,0,5,0
+Electric,Buzzy Buzz,Damage,45,0,15,0
+Electric,Bolt Beak,Damage,43,0,10,0
+Electric,Electromagnetism,Damage+Heal,45,90,5,1
+Electric,Thunder,Damage,55,0,10,0
+Electric,Thunderbolt,Damage,45,0,15,0
+Electric,Volt Tackle,Damage,60,0,15,0
+Electric,Zippy Zap,Damage,25,0,15,-1
+Electric,Amperage,Heal,60,0,10,0
