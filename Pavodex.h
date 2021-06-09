@@ -4,6 +4,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
+#include <tuple>
 
 #include "NormalPavomon.h"
 #include "GrassPavomon.h"
@@ -26,6 +27,8 @@ class Pavodex {
     vector<ElectricPavomon*> getElectricPavomons();
 
     vector<BattleMove*> getMoves();
+
+    tuple<string, string, vector<BattleMove*>> getRandomPavomon();
 
     Pavodex();
 

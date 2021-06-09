@@ -17,6 +17,7 @@ class BattleMove {
     int limit;
     int fatigue;
 
+    string getMoveDescription();
     void printBattleMove();
 
     BattleMove();

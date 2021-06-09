@@ -44,5 +44,7 @@
 
 # Custom files
 main
+chMac
+randomInt
 *.DS_Store
 tempCodeRunnerFile.cpp

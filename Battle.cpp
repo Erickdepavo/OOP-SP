@@ -13,36 +13,40 @@ Battle::Battle(
 
     string pavomon1ID, 
     string pavomon1Type, 
-    vector <BattleMove*> pavomon1Moves, 
-    int pavomon1HP,
+    vector <BattleMove*> pavomon1Moves,
     int pavomon1Level,
-    int pavomon1Fatigue,
 
     string pavomon2ID, 
     string pavomon2Type, 
     vector <BattleMove*> pavomon2Moves, 
-    int pavomon2HP,
-    int pavomon2Level,
-    int pavomon2Fatigue
+    int pavomon2Level
 ) {
     this -> pavodex = &pavodex;
 
     this -> pavomon1ID = pavomon1ID;
     this -> pavomon1Type = pavomon1Type;
     this -> pavomon1Moves = pavomon1Moves;
-    this -> pavomon1HP = pavomon1HP;
     this -> pavomon1Level = pavomon1Level;
-    this -> pavomon1Fatigue = pavomon1Fatigue;
+    this -> pavomon1Fatigue = 0;
     
     this -> pavomon2ID = pavomon2ID;
     this -> pavomon2Type = pavomon2Type;
     this -> pavomon2Moves = pavomon2Moves;
-    this -> pavomon2HP = pavomon2HP;
     this -> pavomon2Level = pavomon2Level;
-    this -> pavomon2Fatigue = pavomon2Fatigue;
+    this -> pavomon2Fatigue = 0;
+
+    this -> pavomon1HP = getHP(pavomon1ID, pavomon1Type, pavomon1Level);
+    this -> pavomon2HP = getHP(pavomon2ID, pavomon2Type, pavomon2Level);
 
     this -> pavomon1Stats = getStats(pavomon1ID, pavomon1Type, pavomon1Level);
     this -> pavomon2Stats = getStats(pavomon2ID, pavomon2Type, pavomon2Level);
+
+    for (int i = 0; i < pavomon1Moves.size(); i++) {
+        pavomon1MoveLimits.push_back(pavomon1Moves[i] -> limit);
+    }
+    for (int i = 0; i < pavomon2Moves.size(); i++) {
+        pavomon2MoveLimits.push_back(pavomon2Moves[i] -> limit);
+    }
 }
 
 tuple<int, int, int, int, int> Battle::getStats(string ID, string type, int level) {
@@ -110,6 +114,41 @@ tuple<int, int, int, int, int> Battle::getStats(string ID, string type, int leve
     return make_tuple(0,0,0,0,0);
 }
 
+int Battle::getHP(string ID, string type, int level) {
+    if (type == "Normal") {
+        for (int i = 0; i < pavodex -> getNormalPavomons().size(); i++) {
+            if (pavodex -> getNormalPavomons()[i] -> ID == ID) {
+                return pavodex -> getNormalPavomons()[i] -> getTotalHp(level);
+            }
+        }
+    } else if (type == "Fire") {
+        for (int i = 0; i < pavodex -> getFirePavomons().size(); i++) {
+            if (pavodex -> getFirePavomons()[i] -> ID == ID) {
+                return pavodex -> getFirePavomons()[i] -> getTotalHp(level);
+            }
+        }
+    } else if (type == "Grass") {
+        for (int i = 0; i < pavodex -> getGrassPavomons().size(); i++) {
+            if (pavodex -> getGrassPavomons()[i] -> ID == ID) {
+                return pavodex -> getGrassPavomons()[i] -> getTotalHp(level);
+            }
+        }
+    } else if (type == "Water") {
+        for (int i = 0; i < pavodex -> getWaterPavomons().size(); i++) {
+            if (pavodex -> getWaterPavomons()[i] -> ID == ID) {
+                return pavodex -> getWaterPavomons()[i] -> getTotalHp(level);
+            }
+        }
+    } else if (type == "Electric") {
+        for (int i = 0; i < pavodex -> getElectricPavomons().size(); i++) {
+            if (pavodex -> getElectricPavomons()[i] -> ID == ID) {
+                return pavodex -> getElectricPavomons()[i] -> getTotalHp(level);
+            }
+        }
+    }
+    return 0;
+}
+
 void Battle::registerAttack(int player, BattleMove &move) {
 
     int *playerHP;
@@ -124,11 +163,11 @@ void Battle::registerAttack(int player, BattleMove &move) {
     int *playerFatigue;
     int *opponentFatigue;
 
-    int *playerID;
-    int *opponentID;
+    string *playerID;
+    string *opponentID;
 
-    int *playerType;
-    int *opponentType; 
+    string *playerType;
+    string *opponentType; 
 
     if (player == 1) {
         playerHP = &pavomon1HP;
@@ -181,13 +220,25 @@ void Battle::registerAttack(int player, BattleMove &move) {
         if (damageToOpponent < 1) { damageToOpponent = 1; }
 
         *opponentHP = *opponentHP - damageToOpponent;
-        
+
+        if (player == 1) {
+            cout << "Attack dealt " << damageToOpponent << " damage to opponent!" << endl;
+        } else {
+            cout << "Attack dealt " << damageToOpponent << " damage to player!" << endl;
+        }
+
     } else if (move.moveType == "Heal") {
         // Healing al jugador
         int healToPlayer = move.value1 + *playerLevel;
         if (healToPlayer < 1) { healToPlayer = 1; }
 
         *playerHP = *playerHP + healToPlayer;
+
+        if (player == 1) {
+            cout << "Heal gave " << healToPlayer << " HP to player!" << endl;
+        } else {
+            cout << "Heal gave " << healToPlayer << " HP to opponent!" << endl;
+        }
 
     } else if (move.moveType == "Damage+Heal") {
         // Daño al oponente y healing al jugador
@@ -199,6 +250,14 @@ void Battle::registerAttack(int player, BattleMove &move) {
         *opponentHP = *opponentHP - damageToOpponent;
         *playerHP = *playerHP + healToPlayer;
 
+        if (player == 1) {
+            cout << "Attack dealt " << damageToOpponent << " damage to opponent!" << endl;
+            cout << "Heal gave " << healToPlayer << " HP to player!" << endl;
+        } else {
+            cout << "Attack dealt " << damageToOpponent << " damage to player!" << endl;
+            cout << "Heal gave " << healToPlayer << " HP to opponent!" << endl;
+        }
+
     } else if (move.moveType == "Damage+Damage") {
         // Daño al oponente y daño al jugador
         double damageToOpponent = (move.value1 * get<0>(*playerStats) / 100) - (0.2 * (get<1>(*opponentStats) - 100)) + (0.1 * (get<2>(*playerStats) - 100)) - (0.1 * (get<3>(*opponentStats) - 100));
@@ -209,13 +268,31 @@ void Battle::registerAttack(int player, BattleMove &move) {
 
         *opponentHP = *opponentHP - damageToOpponent;
         *playerHP = *playerHP - damageToPlayer;
+
+        if (player == 1) {
+            cout << "Attack dealt " << damageToOpponent << " damage to opponent!" << endl;
+            cout << "Attack dealt " << damageToPlayer << " damage to player!" << endl;
+        } else {
+            cout << "Attack dealt " << damageToOpponent << " damage to player!" << endl;
+            cout << "Attack dealt " << damageToPlayer << " damage to opponent!" << endl;
+        }
     }
 
     // Aplicar el la fatiga al jugador (si existe)
     if (move.fatigue > 0) {
         *playerFatigue = *playerFatigue + move.fatigue;
     } else if (move.fatigue < 0) {
-        *opponentFatigue = *opponentFatigue + move.fatigue;
+        *opponentFatigue = *opponentFatigue - move.fatigue;
+    }
+
+    // Checar que las HP no puedan irse más arriba de su máximo
+    int maxPlayerHP = getHP(*playerID,*playerType,*playerLevel);
+    if (*playerHP > maxPlayerHP) {
+        *playerHP = maxPlayerHP;
+    }
+    int maxOpponentHP = getHP(*opponentID,*opponentType,*opponentLevel);
+    if (*opponentHP > maxOpponentHP) {
+        *opponentHP = maxOpponentHP;
     }
     
 }

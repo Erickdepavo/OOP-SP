@@ -30,7 +30,7 @@ class ElectricPavomon: public Pavomon, public Character {
     }
     
     int getTotalHp(int level) {
-      return this->baseHp + level;
+      return this->baseHp + (level * 7);
     }
     int getAttack(int level) {
       return this->baseAttack + level;

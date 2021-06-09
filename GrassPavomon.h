@@ -13,11 +13,24 @@ class GrassPavomon: public Pavomon, public Character {
 
   public:
     vector<BattleMove*> getMoves(vector<BattleMove*> fullList) {
-      return fullList;
+      vector<BattleMove*> listOfSameType;
+
+      for (int i = 0; i < fullList.size(); i++) {
+        if (fullList[i] -> pavomonType == this -> type) {
+          listOfSameType.push_back(fullList[i]);
+        }
+      }
+
+      vector<BattleMove*> finalMoves;
+      for (int j = 0; j < 4; j++) {
+        finalMoves.push_back(listOfSameType[j]);
+      }
+
+      return finalMoves;
     }
 
     int getTotalHp(int level) {
-      return this->baseHp + level;
+      return this->baseHp + (level * 7);
     }
     int getAttack(int level) {
       return this->baseAttack + level;

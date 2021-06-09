@@ -5,6 +5,7 @@
 #include <sstream>
 
 #include "Pavodex.h"
+#include "randomInt.cpp"
 
 using namespace std;
 
@@ -210,4 +211,51 @@ void Pavodex::printMovesList() {
 
     cout << endl;
   }
+}
+
+tuple<string, string, vector<BattleMove*>> Pavodex::getRandomPavomon() {
+  switch (randomInt(0,4)) {
+    case 0: {
+      int i = randomInt(0, getNormalPavomons().size() - 1);
+      return make_tuple(
+        getNormalPavomons()[i] -> ID,
+        getNormalPavomons()[i] -> type,
+        getNormalPavomons()[i] -> getMoves(getMoves())
+      );
+    }; break;
+    case 1: {
+      int i = randomInt(0, getGrassPavomons().size() - 1);
+      return make_tuple(
+        getGrassPavomons()[i] -> ID,
+        getGrassPavomons()[i] -> type,
+        getGrassPavomons()[i] -> getMoves(getMoves())
+      );
+    }; break;
+    case 2: {
+      int i = randomInt(0, getWaterPavomons().size() - 1);
+      return make_tuple(
+        getWaterPavomons()[i] -> ID,
+        getWaterPavomons()[i] -> type,
+        getWaterPavomons()[i] -> getMoves(getMoves())
+      );
+    }; break;
+    case 3: {
+      int i = randomInt(0, getFirePavomons().size() - 1);
+      return make_tuple(
+        getFirePavomons()[i] -> ID,
+        getFirePavomons()[i] -> type,
+        getFirePavomons()[i] -> getMoves(getMoves())
+      );
+    }; break;
+    case 4: {
+      int i = randomInt(0, getElectricPavomons().size() - 1);
+      return make_tuple(
+        getElectricPavomons()[i] -> ID,
+        getElectricPavomons()[i] -> type,
+        getElectricPavomons()[i] -> getMoves(getMoves())
+      );
+    }; break;
+  }
+  vector<BattleMove*> empty;
+  return make_tuple("","",empty);
 }

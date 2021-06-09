@@ -18,6 +18,7 @@ class Battle {
     string pavomon1ID;
     string pavomon1Type;
     vector<BattleMove*> pavomon1Moves;
+    vector<int> pavomon1MoveLimits;
     tuple<int, int, int, int, int> pavomon1Stats;
     int pavomon1HP;
     int pavomon1Level;
@@ -26,6 +27,7 @@ class Battle {
     string pavomon2ID;
     string pavomon2Type;
     vector<BattleMove*> pavomon2Moves;
+    vector<int> pavomon2MoveLimits;
     tuple<int, int, int, int, int> pavomon2Stats;
     int pavomon2HP;
     int pavomon2Level;
@@ -38,20 +40,17 @@ class Battle {
       string pavomon1ID, 
       string pavomon1Type, 
       vector <BattleMove*> pavomon1Moves, 
-      int pavomon1HP,
       int pavomon1Level,
-      int pavomon1Fatigue,
 
       string pavomon2ID, 
       string pavomon2Type, 
       vector <BattleMove*> pavomon2Moves, 
-      int pavomon2HP,
-      int pavomon2Level,
-      int pavomon2Fatigue
+      int pavomon2Level
     );
 
     void registerAttack(int player, BattleMove &move);
     tuple<int, int, int, int, int> getStats(string ID, string type, int level);
+    int getHP(string ID, string type, int level);
 };
 
 #endif

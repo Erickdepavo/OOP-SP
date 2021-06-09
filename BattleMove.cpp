@@ -37,3 +37,30 @@ void BattleMove::printBattleMove() {
   cout << endl;
 }
 
+string BattleMove::getMoveDescription() {
+  string output = "";
+  if (moveType == "Damage") {
+    // Daño al oponente
+    output += "Damage " + intToString(value1);
+  } else if (moveType == "Heal") {
+    // Healing al jugador
+    output += "Heal " + intToString(value1);
+
+  } else if (moveType == "Damage+Heal") {
+    // Daño al oponente y healing al jugador
+    output += "Damage " + intToString(value1);
+    output += " Heal " + intToString(value2);
+
+  } else if (moveType == "Damage+Damage") {
+    // Daño al oponente y daño al jugador
+    output += "Damage " + intToString(value1);
+    output += " Self Damage " + intToString(value2);
+  }
+
+  //output += ", Limit " + intToString(limit)
+  if (fatigue != 0) {
+    output += ", Fat. " + intToString(fatigue);
+  }
+  return output;
+}
+
