@@ -80,18 +80,22 @@ void Pavodex::readMoves() {
   string pavomonType;
   string moveName;
   string moveType;
-  string value;
+  string value1;
+  string value2;
   string limit;
+  string fatigue;
 
   getline(sstream, pavomonType); // Skip first line
 
   while (getline(sstream, pavomonType, ',')) {
     getline(sstream, moveName, ',') ;
     getline(sstream, moveType, ',') ;
-    getline(sstream, value, ',');
-    getline(sstream, limit);
+    getline(sstream, value1, ',');
+    getline(sstream, value2, ',');
+    getline(sstream, limit, ',');
+    getline(sstream, fatigue);
 
-    movesList.push_back(new BattleMove(pavomonType, moveName, moveType, stoi(value), stoi(limit)));
+    movesList.push_back(new BattleMove(pavomonType, moveName, moveType, stoi(value1), stoi(value2), stoi(limit), stoi(fatigue)));
   }
 }
 

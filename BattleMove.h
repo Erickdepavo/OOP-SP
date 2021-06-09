@@ -12,8 +12,10 @@ class BattleMove {
     string pavomonType;
     string moveName;
     string moveType;
-    int value;
+    int value1;
+    int value2;
     int limit;
+    int fatigue;
 
     void printBattleMove();
 
@@ -22,8 +24,10 @@ class BattleMove {
       string pavomonType,
       string moveName,
       string moveType,
-      int value,
-      int limit
+      int value1,
+      int value2,
+      int limit,
+      int fatigue
     );
 };
 
