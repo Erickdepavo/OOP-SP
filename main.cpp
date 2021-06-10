@@ -1,11 +1,14 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <unistd.h> // LIbrería para Sleep
-#include "PlatformVariants.h"
-#include "intToString.cpp"
+#include <unistd.h> // Librería para sleep
 
-#include "ASCIITexts.h"
+#include "PlatformVariants.h"
+
+#include "intToString.cpp"
+#include "randomInt.cpp"
+
+#include "ASCIITexts.h" // ASCII Art
 
 #include "Character.h"
 #include "BattleMove.cpp"
@@ -36,7 +39,6 @@ void clearTerminal() {
 
 int menu(vector<string> options, string message) {
      
-    // usleep(1000) // Sleeps for 1ms
     int currentOption = 0;
 
     while (true) {
@@ -129,6 +131,7 @@ void credits() {
 void runBattle(Battle &battle) {
     bool isPlayerTurn = true;
     bool battleIsRunning = true;
+    bool didPlayerWin;
 
     // Pantalla de carga
     clearTerminal();
@@ -221,41 +224,36 @@ void runBattle(Battle &battle) {
         // Checar si la batalla ya terminó
         if (battle.pavomon1HP <= 0 || battle.pavomon2HP <= 0) {
             battleIsRunning = false;
+
+            if (battle.pavomon1HP <= 0 && battle.pavomon2HP <= 0) {
+                // Si ambos jugadores murieron a la vez, gana el último en jugar
+                didPlayerWin = isPlayerTurn;
+            } else {
+                // Si sólo uno murió, define quién fue
+                didPlayerWin = (battle.pavomon2HP <= 0);
+            }
         } else {
             isPlayerTurn = !isPlayerTurn;
         }
     }
 
+    // Mostrar final de batalla
     clearTerminal();
     usleep(DELAY);
     cout << ascii_game_over << endl << endl;
     usleep(3 * DELAY);
-    if (isPlayerTurn) {
+    if (didPlayerWin) {
         cout << endl << ascii_you_win << endl << endl;
     } else {
         cout << endl << ascii_you_lose << endl << endl;
     }
     usleep(5 * DELAY);
-    credits();
+    credits(); // También mostrar créditos después de una batalla
 }
 
 int main() {
 
     Pavodex pavodex; // Lee todos los datos al inicializar
-    
-    /*
-    for (int i = 0; i < pavodex.getNormalPavomons().size(); i++) {
-        pavodex.getNormalPavomons()[i]->printPavomon();
-    }
-
-    for (int i = 0; i < pavodex.getMoves().size(); i++) {
-        pavodex.getMoves()[i]->printBattleMove();
-    }
-
-    pavodex.printPavomonList();
-    pavodex.printMovesList();
-
-    */
 
     // Inicio del juego
     string message = ascii_pavomonLogo + "\n Welcome to Pavomon!";

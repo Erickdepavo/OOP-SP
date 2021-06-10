@@ -1,3 +1,7 @@
+/*
+ESTE ARCHIVO NO SE USA, FUE SÓLO PARA PRUEBAS.
+SE UTILIZÓ PARA PODER DETECTAR EL TECLADO EN UNIX.
+*/
 #include <termios.h>
 #include <unistd.h>
 #include <fcntl.h>

@@ -1,3 +1,6 @@
+#ifndef intToString_cpp
+#define intToString_cpp
+
 #include <iostream>
 #include <string>
 #include <sstream>
@@ -8,3 +11,4 @@ std::string intToString(int number) {
   return oss.str();
 }
 
+#endif

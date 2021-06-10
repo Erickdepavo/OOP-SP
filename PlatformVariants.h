@@ -13,6 +13,7 @@
     #define KEY_ENTER 13
 
 #elif __APPLE__ || __linux__ || __unix__ || defined(_POSIX_VERSION)
+    //define something for Apple platforms, Linux, Unix, & POSIX.
     #include <termios.h>
     #include <unistd.h>
     #include <fcntl.h>
@@ -22,7 +23,7 @@
     #define KEY_DOWN 66
     #define KEY_LEFT 68
     #define KEY_RIGHT 67
-    #define KEY_ENTER 67 //10
+    #define KEY_ENTER 67 // ENTER is 10, uses right arrow on Mac
     
     int getKey() {
       
@@ -48,21 +49,18 @@
       tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
       fcntl(STDIN_FILENO, F_SETFL, oldf);
 
-      
-      if(ch != EOF)
-      {
+      if (ch != EOF) {
         ungetc(ch,stdin);//ith
         putchar(ch);
         scanf("%s",command);
         printf("\n%s\n",command);
 
         //return -1;
-      }
-      
+      }      
 
       return number;
     }
 
 #else
-#   error "Unknown compiler"
+#   error "Unknown compiler" // Unsupported platform for the game
 #endif
