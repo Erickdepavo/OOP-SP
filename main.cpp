@@ -5,6 +5,8 @@
 #include "PlatformVariants.h"
 #include "intToString.cpp"
 
+#include "ASCIITexts.h"
+
 #include "Character.h"
 #include "BattleMove.cpp"
 #include "Pavomon.cpp"
@@ -27,17 +29,6 @@ GitHub: https://github.com/Erickdepavo/OOP-SP
 */
 
 using namespace std;
-
-const string pavomonLogo =  
-"   _ (`-.    ('-.          (`-.                _   .-')                     .-') _  \n"
-"  ( (OO  )  ( OO ).-.    _(OO  )_             ( '.( OO )_                  ( OO ) ) \n"
-" _.`     \\  / . --. /,--(_/   ,. \\ .-'),-----. ,--.   ,--.).-'),-----. ,--./ ,--,'  \n"
-"(__...--''  | \\-.  \\ \\   \\   /(__/( OO'  .-.  '|   `.'   |( OO'  .-.  '|   \\ |  |\\  \n"
-" |  /  | |.-'-'  |  | \\   \\ /   / /   |  | |  ||         |/   |  | |  ||    \\|  | ) \n"
-" |  |_.' | \\| |_.'  |  \\   '   /, \\_) |  |\\|  ||  |'.'|  |\\_) |  |\\|  ||  .     |/  \n"
-" |  .___.'  |  .-.  |   \\     /__)  \\ |  | |  ||  |   |  |  \\ |  | |  ||  |\\    |   \n"
-" |  |       |  | |  |    \\   /       `'  '-'  '|  |   |  |   `'  '-'  '|  | \\   |   \n"
-" `--'       `--' `--'     `-'          `-----' `--'   `--'     `-----' `--'  `--'   \n";
 
 void clearTerminal() {
     cout << "\x1B[2J\x1B[H"; // Clear multiplataforma
@@ -104,15 +95,27 @@ int menu(vector<string> options, string message) {
 
 int numberInput(string message) {
     int value;
-    cout << message << " ";
-    cin >> value;
+    while (true) {
+        cout << message << " ";
+        try {
+            cin >> value;
+            if (cin.fail()) {
+                cin.clear();
+                cin.ignore(numeric_limits<streamsize>::max(), '\n');
+                throw "Ingresa un número válido";
+            } else {
+                break;
+            }
+        } catch (char const* error) {
+            cout << error << endl;
+        }
+    }
     return value;
 }
 
 void credits() {
-    clearTerminal();
     usleep(DELAY);
-    cout << pavomonLogo << endl;
+    cout << ascii_pavomonLogo << endl;
     usleep(DELAY);
     cout << "Pavomon, battle like a pro!" << "\n\n";
     usleep(DELAY);
@@ -127,15 +130,28 @@ void runBattle(Battle &battle) {
     bool isPlayerTurn = true;
     bool battleIsRunning = true;
 
+    // Pantalla de carga
+    clearTerminal();
+    usleep(2 * DELAY);
+    cout << endl << ascii_match_ready << endl;
+    usleep(2 * DELAY);
+    cout << endl << ascii_match_set << endl;
+    usleep(2 * DELAY);
+    cout << endl << ascii_match_battle << endl;
+    usleep(2 * DELAY);
+
+    // Iniciar batalla
     while (battleIsRunning) {
         clearTerminal();
         
         // Dibujar batalla
         string text =
-        "Player\t\t\tCPU\n"
-        "HP: " + intToString(battle.pavomon1HP) + "/" + intToString(battle.getHP(battle.pavomon1ID, battle.pavomon1Type, battle.pavomon1Level)) + "\t\t" +
+        ascii_pavomon_battle + "\n" +
+        "Player\t\t\t\tCPU\n" +
+        battle.pavomon1Name + "\t\t\t\t" + battle.pavomon2Name + "\n" +
+        "HP: " + intToString(battle.pavomon1HP) + "/" + intToString(battle.getHP(battle.pavomon1ID, battle.pavomon1Type, battle.pavomon1Level)) + "\t\t\t" +
         "HP: " + intToString(battle.pavomon2HP) + "/" + intToString(battle.getHP(battle.pavomon2ID, battle.pavomon2Type, battle.pavomon2Level)) + "\n" +
-        "Type " + battle.pavomon1Type + "\t\t" + "Type " + battle.pavomon2Type + "\n\n";
+        "Type " + battle.pavomon1Type + "\t\t\t" + "Type " + battle.pavomon2Type + "\n\n";
         
         // Turnos
         if (isPlayerTurn && battle.pavomon1Fatigue <= 0) {
@@ -187,7 +203,7 @@ void runBattle(Battle &battle) {
             battle.registerAttack(2, *battle.pavomon2Moves[attackIndex]);
             battle.pavomon2MoveLimits[attackIndex]--;
 
-            usleep(5*DELAY);
+            usleep(5 * DELAY);
 
         } else if (isPlayerTurn && battle.pavomon1Fatigue > 0) {
             // Fatiga Jugador
@@ -212,15 +228,15 @@ void runBattle(Battle &battle) {
 
     clearTerminal();
     usleep(DELAY);
-    cout << "THE BATTLE IS OVER!!!" << endl << endl;
-    usleep(DELAY);
+    cout << ascii_game_over << endl << endl;
+    usleep(3 * DELAY);
     if (isPlayerTurn) {
-        cout << "You win!" << endl << endl;
+        cout << endl << ascii_you_win << endl << endl;
     } else {
-        cout << "The opponent wins." << endl << endl;
+        cout << endl << ascii_you_lose << endl << endl;
     }
-    usleep(DELAY);
-    clearTerminal();
+    usleep(5 * DELAY);
+    credits();
 }
 
 int main() {
@@ -242,7 +258,7 @@ int main() {
     */
 
     // Inicio del juego
-    string message = pavomonLogo + "\n Welcome to Pavomon!";
+    string message = ascii_pavomonLogo + "\n Welcome to Pavomon!";
     vector<string> mainOptions{"Play match", "Credits", "Exit"};
 
     int mainMenuOption = menu(mainOptions, message);
@@ -258,7 +274,7 @@ int main() {
             vector<string> pavomonTypesOptions{"Normal", "Grass", "Water", "Fire", "Electric"};
             vector<string> pavomonNames;
 
-            int pavomonTypeOption = menu(pavomonTypesOptions, "Choose your Pavomon type: ");
+            int pavomonTypeOption = menu(pavomonTypesOptions, ascii_play_match + "Choose your Pavomon type: ");
             switch (pavomonTypeOption) {
 
                 case 0: {
@@ -267,7 +283,7 @@ int main() {
                         pavomonNames.push_back(pavodex.getNormalPavomons()[i] -> name);
                     }
 
-                    int selectedPavomonIndex = menu(pavomonNames, "Choose the best!");
+                    int selectedPavomonIndex = menu(pavomonNames, ascii_play_match + "Choose the best!");
                     pavomonID = pavodex.getNormalPavomons()[selectedPavomonIndex] -> ID;
                     pavomonType = pavodex.getNormalPavomons()[selectedPavomonIndex] -> type;
                     pavomonMoves = pavodex.getNormalPavomons()[selectedPavomonIndex] -> getMoves(pavodex.getMoves());
@@ -281,7 +297,7 @@ int main() {
                         pavomonNames.push_back(pavodex.getGrassPavomons()[i] -> name);
                     }
 
-                    int selectedPavomonIndex = menu(pavomonNames, "Choose the best!");
+                    int selectedPavomonIndex = menu(pavomonNames, ascii_play_match + "Choose the best!");
                     pavomonID = pavodex.getGrassPavomons()[selectedPavomonIndex] -> ID;
                     pavomonType = pavodex.getGrassPavomons()[selectedPavomonIndex] -> type;
                     pavomonMoves = pavodex.getGrassPavomons()[selectedPavomonIndex] -> getMoves(pavodex.getMoves());
@@ -294,7 +310,7 @@ int main() {
                         pavomonNames.push_back(pavodex.getWaterPavomons()[i] -> name);
                     }
 
-                    int selectedPavomonIndex = menu(pavomonNames, "Choose the best!");
+                    int selectedPavomonIndex = menu(pavomonNames, ascii_play_match + "Choose the best!");
                     pavomonID = pavodex.getWaterPavomons()[selectedPavomonIndex] -> ID;
                     pavomonType = pavodex.getWaterPavomons()[selectedPavomonIndex] -> type;
                     pavomonMoves = pavodex.getWaterPavomons()[selectedPavomonIndex] -> getMoves(pavodex.getMoves());
@@ -307,7 +323,7 @@ int main() {
                         pavomonNames.push_back(pavodex.getFirePavomons()[i] -> name);
                     }
 
-                    int selectedPavomonIndex = menu(pavomonNames, "Choose the best!");
+                    int selectedPavomonIndex = menu(pavomonNames, ascii_play_match + "Choose the best!");
                     pavomonID = pavodex.getFirePavomons()[selectedPavomonIndex] -> ID;
                     pavomonType = pavodex.getFirePavomons()[selectedPavomonIndex] -> type;
                     pavomonMoves = pavodex.getFirePavomons()[selectedPavomonIndex] -> getMoves(pavodex.getMoves());
@@ -320,7 +336,7 @@ int main() {
                         pavomonNames.push_back(pavodex.getElectricPavomons()[i] -> name);
                     }
 
-                    int selectedPavomonIndex = menu(pavomonNames, "Choose the best!");
+                    int selectedPavomonIndex = menu(pavomonNames, ascii_play_match + "Choose the best!");
                     pavomonID = pavodex.getElectricPavomons()[selectedPavomonIndex] -> ID;
                     pavomonType = pavodex.getElectricPavomons()[selectedPavomonIndex] -> type;
                     pavomonMoves = pavodex.getElectricPavomons()[selectedPavomonIndex] -> getMoves(pavodex.getMoves());
@@ -343,6 +359,7 @@ int main() {
         break;
 
         case 1:
+            clearTerminal();
             credits();
             break;
         default:

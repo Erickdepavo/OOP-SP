@@ -35,6 +35,9 @@ Battle::Battle(
     this -> pavomon2Level = pavomon2Level;
     this -> pavomon2Fatigue = 0;
 
+    this -> pavomon1Name = getName(pavomon1ID, pavomon1Type, pavomon1Level);
+    this -> pavomon2Name = getName(pavomon2ID, pavomon2Type, pavomon2Level);
+
     this -> pavomon1HP = getHP(pavomon1ID, pavomon1Type, pavomon1Level);
     this -> pavomon2HP = getHP(pavomon2ID, pavomon2Type, pavomon2Level);
 
@@ -149,6 +152,41 @@ int Battle::getHP(string ID, string type, int level) {
     return 0;
 }
 
+string Battle::getName(string ID, string type, int level) {
+    if (type == "Normal") {
+        for (int i = 0; i < pavodex -> getNormalPavomons().size(); i++) {
+            if (pavodex -> getNormalPavomons()[i] -> ID == ID) {
+                return pavodex -> getNormalPavomons()[i] -> name;
+            }
+        }
+    } else if (type == "Fire") {
+        for (int i = 0; i < pavodex -> getFirePavomons().size(); i++) {
+            if (pavodex -> getFirePavomons()[i] -> ID == ID) {
+                return pavodex -> getFirePavomons()[i] -> name;
+            }
+        }
+    } else if (type == "Grass") {
+        for (int i = 0; i < pavodex -> getGrassPavomons().size(); i++) {
+            if (pavodex -> getGrassPavomons()[i] -> ID == ID) {
+                return pavodex -> getGrassPavomons()[i] -> name;
+            }
+        }
+    } else if (type == "Water") {
+        for (int i = 0; i < pavodex -> getWaterPavomons().size(); i++) {
+            if (pavodex -> getWaterPavomons()[i] -> ID == ID) {
+                return pavodex -> getWaterPavomons()[i] -> name;
+            }
+        }
+    } else if (type == "Electric") {
+        for (int i = 0; i < pavodex -> getElectricPavomons().size(); i++) {
+            if (pavodex -> getElectricPavomons()[i] -> ID == ID) {
+                return pavodex -> getElectricPavomons()[i] -> name;
+            }
+        }
+    }
+    return "";
+}
+
 void Battle::registerAttack(int player, BattleMove &move) {
 
     int *playerHP;
@@ -207,6 +245,40 @@ void Battle::registerAttack(int player, BattleMove &move) {
         opponentType = &pavomon1Type;
     }
 
+    // Damage multiplier
+    double damageMultiplier;
+    if (
+        (*playerType == "Grass" && *opponentType == "Water") ||
+        (*playerType == "Water" && *opponentType == "Fire") ||
+        (*playerType == "Fire" && *opponentType == "Grass") ||
+        (*playerType == "Electric" && *opponentType == "Water")
+    ) {
+        damageMultiplier = 1.5;
+
+    } else if (
+        (*playerType == "Water" && *opponentType == "Grass") ||
+        (*playerType == "Fire" && *opponentType == "Water") ||
+        (*playerType == "Grass" && *opponentType == "Fire") ||
+        (*playerType == "Water" && *opponentType == "Electric")
+    ) {
+        damageMultiplier = 0.5;
+        
+    } else if (
+        (*playerType == "Grass" && *opponentType == "Electric") ||
+        (*playerType == "Electric" && *opponentType == "Grass")
+    ) {
+        damageMultiplier = 0.8;
+        
+    } else if (
+        (*playerType == "Fire" && *opponentType == "Electric") ||
+        (*playerType == "Electric" && *opponentType == "Fire")
+    ) {
+        damageMultiplier = 0.9;
+        
+    } else {
+        damageMultiplier = 1.0;
+    }
+
     /*
     Fórmulas:
         damageToOpponent = (Damage * Attack / 100) - (0.2 * (Defense - 100)) + (0.1 * (SpAttack - 100)) - (0.1 * (SpDefense - 100))
@@ -217,6 +289,7 @@ void Battle::registerAttack(int player, BattleMove &move) {
     if (move.moveType == "Damage") {
         // Daño al oponente
         double damageToOpponent = (move.value1 * get<0>(*playerStats) / 100) - (0.2 * (get<1>(*opponentStats) - 100)) + (0.1 * (get<2>(*playerStats) - 100)) - (0.1 * (get<3>(*opponentStats) - 100));
+        damageToOpponent = damageToOpponent * damageMultiplier;
         if (damageToOpponent < 1) { damageToOpponent = 1; }
 
         *opponentHP = *opponentHP - damageToOpponent;
@@ -243,6 +316,7 @@ void Battle::registerAttack(int player, BattleMove &move) {
     } else if (move.moveType == "Damage+Heal") {
         // Daño al oponente y healing al jugador
         double damageToOpponent = (move.value1 * get<0>(*playerStats) / 100) - (0.2 * (get<1>(*opponentStats) - 100)) + (0.1 * (get<2>(*playerStats) - 100)) - (0.1 * (get<3>(*opponentStats) - 100));
+        damageToOpponent = damageToOpponent * damageMultiplier;
         int healToPlayer = move.value2 + *playerLevel;
         if (damageToOpponent < 1) { damageToOpponent = 1; }
         if (healToPlayer < 1) { healToPlayer = 1; }
@@ -261,6 +335,7 @@ void Battle::registerAttack(int player, BattleMove &move) {
     } else if (move.moveType == "Damage+Damage") {
         // Daño al oponente y daño al jugador
         double damageToOpponent = (move.value1 * get<0>(*playerStats) / 100) - (0.2 * (get<1>(*opponentStats) - 100)) + (0.1 * (get<2>(*playerStats) - 100)) - (0.1 * (get<3>(*opponentStats) - 100));
+        damageToOpponent = damageToOpponent * damageMultiplier;
         double damageToPlayer = (move.value2 * get<0>(*playerStats) / 100) - (0.2 * (get<1>(*playerStats) - 100)) + (0.1 * (get<2>(*playerStats) - 100)) - (0.1 * (get<3>(*playerStats) - 100));
 
         if (damageToOpponent < 1) { damageToOpponent = 1; }
